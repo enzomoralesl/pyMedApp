@@ -41,7 +41,7 @@ def test_api():
     }
     
     print(f"Criando médico: {doctor_data}")
-    response = requests.post(f"{API_BASE_URL}/v1/doctors/", json=doctor_data)
+    response = requests.post(f"{API_BASE_URL}/v1/doctor/", json=doctor_data)
     
     if response.status_code == 200:
         print("✅ Médico criado com sucesso!")
@@ -57,7 +57,7 @@ def test_api():
         }
         
         print(f"\nAtualizando médico para: {updated_data}")
-        response = requests.put(f"{API_BASE_URL}/v1/doctors/{doctor_id}", json=updated_data)
+        response = requests.put(f"{API_BASE_URL}/v1/doctor/{doctor_id}", json=updated_data)
         
         if response.status_code == 200:
             print("✅ Médico atualizado com sucesso!")
@@ -67,7 +67,7 @@ def test_api():
             
         # Listar todos os médicos
         print("\nListando todos os médicos:")
-        response = requests.get(f"{API_BASE_URL}/v1/doctors/")
+        response = requests.get(f"{API_BASE_URL}/v1/doctor/")
         
         if response.status_code == 200:
             doctors = response.json()
@@ -75,7 +75,7 @@ def test_api():
             
         # Deletar o médico
         print(f"\nDeletando o médico {doctor_id}")
-        response = requests.delete(f"{API_BASE_URL}/v1/doctors/{doctor_id}")
+        response = requests.delete(f"{API_BASE_URL}/v1/doctor/{doctor_id}")
         
         if response.status_code == 200:
             print("✅ Médico removido com sucesso!")
@@ -96,7 +96,7 @@ def test_api():
     }
     
     print(f"Criando paciente: {patient_data}")
-    response = requests.post(f"{API_BASE_URL}/v1/patients/", json=patient_data)
+    response = requests.post(f"{API_BASE_URL}/v1/patient/", json=patient_data)
     
     if response.status_code == 200:
         print("✅ Paciente criado com sucesso!")
@@ -115,7 +115,7 @@ def test_api():
         }
         
         print(f"\nAtualizando paciente para: {updated_data}")
-        response = requests.put(f"{API_BASE_URL}/v1/patients/{patient_id}", json=updated_data)
+        response = requests.put(f"{API_BASE_URL}/v1/patient/{patient_id}", json=updated_data)
         
         if response.status_code == 200:
             print("✅ Paciente atualizado com sucesso!")
@@ -125,7 +125,7 @@ def test_api():
             
         # Listar todos os pacientes
         print("\nListando todos os pacientes:")
-        response = requests.get(f"{API_BASE_URL}/v1/patients/")
+        response = requests.get(f"{API_BASE_URL}/v1/patient/")
         
         if response.status_code == 200:
             patients = response.json()
@@ -133,7 +133,7 @@ def test_api():
             
         # Deletar o paciente
         print(f"\nDeletando o paciente {patient_id}")
-        response = requests.delete(f"{API_BASE_URL}/v1/patients/{patient_id}")
+        response = requests.delete(f"{API_BASE_URL}/v1/patient/{patient_id}")
         
         if response.status_code == 200:
             print("✅ Paciente removido com sucesso!")

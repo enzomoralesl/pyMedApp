@@ -41,8 +41,8 @@ def read_root():
         "message": "Bem-vindo à PyMedApp API!",
         "docs": "/docs",
         "endpoints": {
-            "doctors": "/v1/doctors",
-            "patients": "/v1/patients"
+            "doctors": "/v1/doctor",
+            "patients": "/v1/patient"
         }
     }
 

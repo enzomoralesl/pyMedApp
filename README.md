@@ -68,19 +68,19 @@ pymedapp/
 
 ### Médicos (Doctors)
 
-- **GET /v1/doctors**: Lista todos os médicos
-- **GET /v1/doctors/{id}**: Obtém um médico pelo ID
-- **POST /v1/doctors**: Cria um novo médico
-- **PUT /v1/doctors/{id}**: Atualiza um médico existente
-- **DELETE /v1/doctors/{id}**: Remove um médico
+- **GET /v1/doctor**: Lista todos os médicos
+- **GET /v1/doctor/{id}**: Obtém um médico pelo ID
+- **POST /v1/doctor**: Cria um novo médico
+- **PUT /v1/doctor/{id}**: Atualiza um médico existente
+- **DELETE /v1/doctor/{id}**: Remove um médico
 
 ### Pacientes (Patients)
 
-- **GET /v1/patients**: Lista todos os pacientes
-- **GET /v1/patients/{id}**: Obtém um paciente pelo ID
-- **POST /v1/patients**: Cria um novo paciente
-- **PUT /v1/patients/{id}**: Atualiza um paciente existente
-- **DELETE /v1/patients/{id}**: Remove um paciente
+- **GET /v1/patient**: Lista todos os pacientes
+- **GET /v1/patient/{id}**: Obtém um paciente pelo ID
+- **POST /v1/patient**: Cria um novo paciente
+- **PUT /v1/patient/{id}**: Atualiza um paciente existente
+- **DELETE /v1/patient/{id}**: Remove um paciente
 
 ## Exemplos de Uso
 
@@ -88,7 +88,7 @@ pymedapp/
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:8000/v1/doctors/' \
+  'http://localhost:8000/v1/doctor/' \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Dr. John Smith",
@@ -101,7 +101,7 @@ curl -X 'POST' \
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:8000/v1/patients/' \
+  'http://localhost:8000/v1/patient/' \
   -H 'Content-Type: application/json' \
   -d '{
     "email": "paciente@exemplo.com",

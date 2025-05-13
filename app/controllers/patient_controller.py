@@ -9,7 +9,7 @@ import logging
 # Configuração de logging
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/v1/patients", tags=["Patients"])
+router = APIRouter(prefix="/v1/patient", tags=["Patients"])
 
 @router.post("/", response_model=PatientResponse, status_code=status.HTTP_201_CREATED)
 async def create(patient_request: PatientRequest, response: Response, db: Session = Depends(get_db)):

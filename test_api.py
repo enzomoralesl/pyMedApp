@@ -72,7 +72,7 @@ def test_doctor_endpoints():
     
     # 1. Criar um médico
     print_info("1. Criando um novo médico")
-    response = requests.post(f"{API_BASE_URL}/v1/doctors/", json=doctor_data)
+    response = requests.post(f"{API_BASE_URL}/v1/doctor/", json=doctor_data)
     
     if response.status_code == 200:
         print_success(f"Médico criado com sucesso! Status: {response.status_code}")
@@ -86,7 +86,7 @@ def test_doctor_endpoints():
     
     # 2. Obter todos os médicos
     print_info("\n2. Obtendo lista de médicos")
-    response = requests.get(f"{API_BASE_URL}/v1/doctors/")
+    response = requests.get(f"{API_BASE_URL}/v1/doctor/")
     
     if response.status_code == 200:
         doctors = response.json()
@@ -96,7 +96,7 @@ def test_doctor_endpoints():
     
     # 3. Obter médico por ID
     print_info(f"\n3. Obtendo médico por ID ({doctor_id})")
-    response = requests.get(f"{API_BASE_URL}/v1/doctors/{doctor_id}")
+    response = requests.get(f"{API_BASE_URL}/v1/doctor/{doctor_id}")
     
     if response.status_code == 200:
         print_success(f"Médico encontrado! Status: {response.status_code}")
@@ -112,7 +112,7 @@ def test_doctor_endpoints():
     }
     
     print_info(f"\n4. Atualizando médico ({doctor_id})")
-    response = requests.put(f"{API_BASE_URL}/v1/doctors/{doctor_id}", json=updated_doctor_data)
+    response = requests.put(f"{API_BASE_URL}/v1/doctor/{doctor_id}", json=updated_doctor_data)
     
     if response.status_code == 200:
         print_success(f"Médico atualizado! Status: {response.status_code}")
@@ -123,7 +123,7 @@ def test_doctor_endpoints():
     
     # 5. Deletar médico
     print_info(f"\n5. Deletando médico ({doctor_id})")
-    response = requests.delete(f"{API_BASE_URL}/v1/doctors/{doctor_id}")
+    response = requests.delete(f"{API_BASE_URL}/v1/doctor/{doctor_id}")
     
     if response.status_code == 200:
         print_success(f"Médico removido! Status: {response.status_code}")
@@ -134,7 +134,7 @@ def test_doctor_endpoints():
     
     # Verificar se foi realmente deletado
     print_info(f"\n6. Verificando se o médico foi realmente removido")
-    response = requests.get(f"{API_BASE_URL}/v1/doctors/{doctor_id}")
+    response = requests.get(f"{API_BASE_URL}/v1/doctor/{doctor_id}")
     
     if response.status_code == 404:
         print_success(f"Médico realmente não existe mais! Status: {response.status_code}")
@@ -158,7 +158,7 @@ def test_patient_endpoints():
     
     # 1. Criar um paciente
     print_info("1. Criando um novo paciente")
-    response = requests.post(f"{API_BASE_URL}/v1/patients/", json=patient_data)
+    response = requests.post(f"{API_BASE_URL}/v1/patient/", json=patient_data)
     
     if response.status_code == 200:
         print_success(f"Paciente criado com sucesso! Status: {response.status_code}")
@@ -172,7 +172,7 @@ def test_patient_endpoints():
     
     # 2. Obter todos os pacientes
     print_info("\n2. Obtendo lista de pacientes")
-    response = requests.get(f"{API_BASE_URL}/v1/patients/")
+    response = requests.get(f"{API_BASE_URL}/v1/patient/")
     
     if response.status_code == 200:
         patients = response.json()
@@ -182,7 +182,7 @@ def test_patient_endpoints():
     
     # 3. Obter paciente por ID
     print_info(f"\n3. Obtendo paciente por ID ({patient_id})")
-    response = requests.get(f"{API_BASE_URL}/v1/patients/{patient_id}")
+    response = requests.get(f"{API_BASE_URL}/v1/patient/{patient_id}")
     
     if response.status_code == 200:
         print_success(f"Paciente encontrado! Status: {response.status_code}")
@@ -201,7 +201,7 @@ def test_patient_endpoints():
     }
     
     print_info(f"\n4. Atualizando paciente ({patient_id})")
-    response = requests.put(f"{API_BASE_URL}/v1/patients/{patient_id}", json=updated_patient_data)
+    response = requests.put(f"{API_BASE_URL}/v1/patient/{patient_id}", json=updated_patient_data)
     
     if response.status_code == 200:
         print_success(f"Paciente atualizado! Status: {response.status_code}")
@@ -212,7 +212,7 @@ def test_patient_endpoints():
     
     # 5. Deletar paciente
     print_info(f"\n5. Deletando paciente ({patient_id})")
-    response = requests.delete(f"{API_BASE_URL}/v1/patients/{patient_id}")
+    response = requests.delete(f"{API_BASE_URL}/v1/patient/{patient_id}")
     
     if response.status_code == 200:
         print_success(f"Paciente removido! Status: {response.status_code}")
@@ -223,7 +223,7 @@ def test_patient_endpoints():
     
     # Verificar se foi realmente deletado
     print_info(f"\n6. Verificando se o paciente foi realmente removido")
-    response = requests.get(f"{API_BASE_URL}/v1/patients/{patient_id}")
+    response = requests.get(f"{API_BASE_URL}/v1/patient/{patient_id}")
     
     if response.status_code == 404:
         print_success(f"Paciente realmente não existe mais! Status: {response.status_code}")
