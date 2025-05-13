@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.controllers.doctor_controller import router as doctor_router
 from app.controllers.patient_controller import router as patient_router
 from app.database import create_tables
+from app.exception_handler import add_exception_handlers
 import uvicorn
 
 # Criação da aplicação FastAPI
@@ -11,6 +12,8 @@ app = FastAPI(
     description="API para gerenciamento de pacientes e médicos",
     version="1.0.0"
 )
+
+add_exception_handlers(app)
 
 # Configuração de CORS
 app.add_middleware(
