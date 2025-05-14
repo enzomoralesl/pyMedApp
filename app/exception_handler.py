@@ -12,8 +12,9 @@ logger = logging.getLogger("uvicorn.error")
 
 # Map SQL constraint names to custom messages (adapt as needed)
 CONSTRAINT_MESSAGES = {
-    "tb_patient_email_key": ("Email já cadastrado", 500, "INTERNAL_SERVER_ERROR"),
-    "tb_doctor_crm_key": ("CRM já cadastrado", 500, "INTERNAL_SERVER_ERROR"),
+    "tb_patient_email_key": ("Email já cadastrado", 409, "CONFLICT"),
+    "tb_patient_cpf_key": ("CPF já cadastrado", 409, "CONFLICT"),
+    "tb_doctor_crm_key": ("CRM já cadastrado", 409, "CONFLICT"),
 }
 
 def get_error_response(status_code, status_name, message, error_details=None):
@@ -36,12 +37,12 @@ def add_exception_handlers(app):
         logger.error(f"HTTPException: {exc.detail}")
         return JSONResponse(
             status_code=exc.status_code,
-            content=get_error_response(
+            content={"error": get_error_response(
                 status_code=exc.status_code,
                 status_name=get_status_name(exc.status_code),
                 message=exc.detail,
                 error_details=None
-            ).dict(),
+            ).dict()},
         )
 
     @app.exception_handler(RequestValidationError)
@@ -49,37 +50,38 @@ def add_exception_handlers(app):
         logger.error(f"Validation error: {exc.errors()}")
         return JSONResponse(
             status_code=400,
-            content=get_error_response(
+            content={"error": get_error_response(
                 status_code=400,
                 status_name="BAD_REQUEST",
                 message="Erro de validação",
                 error_details=str(exc)
-            ).dict(),
+            ).dict()},
         )
 
     @app.exception_handler(IntegrityError)
     async def sqlalchemy_integrity_error_handler(request: Request, exc: IntegrityError):
         logger.error(f"Integrity error: {exc}")
-        msg = str(exc.orig)
+        # Usar str(exc) para garantir que a mensagem do constraint seja encontrada
+        msg = str(exc)
         for constraint, (custom_msg, code, status_name) in CONSTRAINT_MESSAGES.items():
             if constraint in msg:
                 return JSONResponse(
-                    status_code=code,
-                    content=get_error_response(
-                        status_code=code,
-                        status_name=status_name,
+                    status_code=409,
+                    content={"error": get_error_response(
+                        statusCode=409,
+                        status="CONFLICT",
                         message=custom_msg,
-                        error_details=msg
-                    ).dict(),
+                        errorDetails=msg
+                    ).dict()},
                 )
         return JSONResponse(
             status_code=500,
-            content=get_error_response(
-                status_code=500,
-                status_name="INTERNAL_SERVER_ERROR",
+            content={"error": get_error_response(
+                statusCode=500,
+                status="INTERNAL_SERVER_ERROR",
                 message="Erro de violação de integridade na base de dados",
-                error_details=msg
-            ).dict(),
+                errorDetails=msg
+            ).dict()},
         )
 
     @app.exception_handler(Exception)
@@ -87,10 +89,10 @@ def add_exception_handlers(app):
         logger.error(f"Unhandled exception: {exc}")
         return JSONResponse(
             status_code=500,
-            content=get_error_response(
+            content={"error": get_error_response(
                 status_code=500,
                 status_name="INTERNAL_SERVER_ERROR",
                 message="Erro inesperado",
                 error_details=str(exc)
-            ).dict(),
+            ).dict()},
         )

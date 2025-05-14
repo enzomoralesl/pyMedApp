@@ -40,12 +40,9 @@ def create_patient(db: Session, patient_request: PatientRequest):
         return patient
     except IntegrityError as e:
         db.rollback()
-        if 'uq_patient_email' in str(e):
-            raise HTTPException(status_code=400, detail="Email já cadastrado")
-        elif 'uq_patient_cpf' in str(e):
-            raise HTTPException(status_code=400, detail="CPF já cadastrado")
+        # Não lançar HTTPException manualmente para unicidade (email/cpf), deixar handler global tratar
         logger.error(f"Erro ao criar paciente: {str(e)}")
-        raise HTTPException(status_code=400, detail="Erro ao criar paciente")
+        raise
     except Exception as e:
         db.rollback()
         logger.error(f"Erro inesperado ao criar paciente: {str(e)}")
@@ -115,12 +112,9 @@ def update_patient(db: Session, patient_id: uuid.UUID, patient_request: PatientR
         return None
     except IntegrityError as e:
         db.rollback()
-        if 'uq_patient_email' in str(e):
-            raise HTTPException(status_code=400, detail="Email já cadastrado")
-        elif 'uq_patient_cpf' in str(e):
-            raise HTTPException(status_code=400, detail="CPF já cadastrado")
+        # Não lançar HTTPException manualmente para unicidade (email/cpf), deixar handler global tratar
         logger.error(f"Erro ao atualizar paciente: {str(e)}")
-        raise HTTPException(status_code=400, detail="Erro ao atualizar paciente")
+        raise
     except Exception as e:
         db.rollback()
         logger.error(f"Erro inesperado ao atualizar paciente: {str(e)}")

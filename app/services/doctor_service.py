@@ -37,10 +37,9 @@ def create_doctor(db: Session, doctor_request: DoctorRequest):
         return doctor
     except IntegrityError as e:
         db.rollback()
-        if 'uq_doctor_crm' in str(e):
-            raise HTTPException(status_code=400, detail="CRM já cadastrado")
+        # Não lançar HTTPException manualmente para unicidade (CRM), deixar handler global tratar
         logger.error(f"Erro ao criar médico: {str(e)}")
-        raise HTTPException(status_code=400, detail="Erro ao criar médico")
+        raise
     except Exception as e:
         db.rollback()
         logger.error(f"Erro inesperado ao criar médico: {str(e)}")
@@ -107,10 +106,9 @@ def update_doctor(db: Session, doctor_id: uuid.UUID, doctor_request: DoctorReque
         return None
     except IntegrityError as e:
         db.rollback()
-        if 'uq_doctor_crm' in str(e):
-            raise HTTPException(status_code=400, detail="CRM já cadastrado")
+        # Não lançar HTTPException manualmente para unicidade (CRM), deixar handler global tratar
         logger.error(f"Erro ao atualizar médico: {str(e)}")
-        raise HTTPException(status_code=400, detail="Erro ao atualizar médico")
+        raise
     except Exception as e:
         db.rollback()
         logger.error(f"Erro inesperado ao atualizar médico: {str(e)}")
