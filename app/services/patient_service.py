@@ -81,13 +81,13 @@ def get_patient_by_id(db: Session, patient_id: uuid.UUID):
         logger.error(f"Erro ao buscar paciente por ID: {str(e)}")
         raise HTTPException(status_code=500, detail="Erro ao buscar paciente")
 
-def update_patient(db: Session, patient_id: uuid.UUID, patient_request: PatientRequest):
+def update_patient(db: Session, patient_email: str, patient_request: PatientRequest):
     """
     Atualiza um paciente existente.
     
     Args:
         db: Sessão do banco de dados
-        patient_id: ID do paciente a ser atualizado
+        patient_email: Email do paciente a ser atualizado
         patient_request: Novos dados do paciente
     
     Returns:
@@ -97,7 +97,7 @@ def update_patient(db: Session, patient_id: uuid.UUID, patient_request: PatientR
         HTTPException: Se ocorrer algum erro ao atualizar o paciente
     """
     try:
-        patient = db.query(Patient).filter(Patient.id == patient_id).first()
+        patient = db.query(Patient).filter(Patient.email == patient_email).first()
         if patient:
             patient.email = patient_request.email
             patient.name = patient_request.name
