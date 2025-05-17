@@ -54,7 +54,7 @@
                 <stringProp name="Argument.value">{&#xd;
 	&quot;email&quot;: &quot;enzo.moralesl@gmail.com&quot;,&#xd;
 	&quot;name&quot;: &quot;Enzo Morales&quot;,&#xd;
-	&quot;cpf&quot;: &quot;4760679511&quot;,&#xd;
+	&quot;cpf&quot;: &quot;47606712345&quot;,&#xd;
 	&quot;password&quot;: &quot;securePassword123&quot;,&#xd;
 	&quot;phone&quot;: &quot;+55 11 94013-2922&quot;,&#xd;
 	&quot;birthDate&quot;: &quot;2000-08-05&quot;&#xd;
@@ -75,7 +75,7 @@
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Read Patient" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Read Patient">
           <stringProp name="HTTPSampler.domain">${baseUrl}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
           <stringProp name="HTTPSampler.path">${path}</stringProp>
@@ -130,7 +130,7 @@
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Delete Patient" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Delete Patient">
           <stringProp name="HTTPSampler.domain">${baseUrl}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
           <stringProp name="HTTPSampler.path">${path}/${email1}</stringProp>
@@ -151,7 +151,7 @@
           </HeaderManager>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="List Patients" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="List Patients">
           <stringProp name="HTTPSampler.domain">${baseUrl}</stringProp>
           <stringProp name="HTTPSampler.port">${port}</stringProp>
           <stringProp name="HTTPSampler.path">${path}</stringProp>
