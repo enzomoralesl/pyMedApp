@@ -1,10 +1,10 @@
 # PyMedApp - FastAPI Medical Application
 
-PyMedApp é uma API RESTful desenvolvida com Python e FastAPI para gerenciar informações de pacientes e médicos. Este projeto é uma versão Python do aplicativo original MedApp desenvolvido em Java Spring Boot.
+PyMedApp é uma API RESTful desenvolvida com Python e FastAPI para gerenciar informações de pacientes. Este projeto é uma versão Python do aplicativo original MedApp desenvolvido em Java Spring Boot.
 
 ## Características
 
-- API RESTful completa para gerenciar médicos e pacientes
+- API RESTful completa para gerenciar pacientes
 - Estrutura modular e fácil de manter
 - Persistência de dados usando PostgreSQL
 - Gerenciamento de contêineres com Docker e Docker Compose

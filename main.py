@@ -8,7 +8,7 @@ import uvicorn
 # Criação da aplicação FastAPI
 app = FastAPI(
     title="PyMedApp API",
-    description="API para gerenciamento de pacientes e médicos",
+    description="API para gerenciamento de pacientes",
     version="1.0.0"
 )
 
