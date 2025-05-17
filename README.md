@@ -66,13 +66,6 @@ pymedapp/
 
 ## API Endpoints
 
-### Médicos (Doctors)
-
-- **GET /v1/doctor**: Lista todos os médicos
-- **GET /v1/doctor/{id}**: Obtém um médico pelo ID
-- **POST /v1/doctor**: Cria um novo médico
-- **PUT /v1/doctor/{id}**: Atualiza um médico existente
-- **DELETE /v1/doctor/{id}**: Remove um médico
 
 ### Pacientes (Patients)
 
@@ -83,19 +76,6 @@ pymedapp/
 - **DELETE /v1/patient/{id}**: Remove um paciente
 
 ## Exemplos de Uso
-
-### Criar um novo médico
-
-```bash
-curl -X 'POST' \
-  'http://localhost:8000/v1/doctor/' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "name": "Dr. John Smith",
-    "specialty": "Cardiologia",
-    "crm": "12345-SP"
-  }'
-```
 
 ### Criar um novo paciente
 

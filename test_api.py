@@ -59,89 +59,6 @@ def check_api_health():
         print_warning("Certifique-se que a aplicação está em execução")
         return False
 
-def test_doctor_endpoints():
-    """Testa os endpoints relacionados a médicos"""
-    print_header("Testando endpoints de médicos (Doctors)")
-    
-    # Dados para teste
-    doctor_data = {
-        "name": "Dr. Test Doctor",
-        "specialty": "Tester",
-        "crm": f"TEST-{uuid.uuid4().hex[:5]}"  # CRM único para evitar conflitos
-    }
-    
-    # 1. Criar um médico
-    print_info("1. Criando um novo médico")
-    response = requests.post(f"{API_BASE_URL}/v1/doctor/", json=doctor_data)
-    
-    if response.status_code == 200:
-        print_success(f"Médico criado com sucesso! Status: {response.status_code}")
-        doctor = response.json()
-        doctor_id = doctor.get("id")
-        print_json(doctor)
-    else:
-        print_error(f"Erro ao criar médico. Status: {response.status_code}")
-        print_warning(f"Resposta: {response.text}")
-        return
-    
-    # 2. Obter todos os médicos
-    print_info("\n2. Obtendo lista de médicos")
-    response = requests.get(f"{API_BASE_URL}/v1/doctor/")
-    
-    if response.status_code == 200:
-        doctors = response.json()
-        print_success(f"Lista de médicos obtida! Total: {len(doctors)}")
-    else:
-        print_error(f"Erro ao obter médicos. Status: {response.status_code}")
-    
-    # 3. Obter médico por ID
-    print_info(f"\n3. Obtendo médico por ID ({doctor_id})")
-    response = requests.get(f"{API_BASE_URL}/v1/doctor/{doctor_id}")
-    
-    if response.status_code == 200:
-        print_success(f"Médico encontrado! Status: {response.status_code}")
-        print_json(response.json())
-    else:
-        print_error(f"Erro ao obter médico. Status: {response.status_code}")
-    
-    # 4. Atualizar médico
-    updated_doctor_data = {
-        "name": "Dr. Updated Doctor",
-        "specialty": "Updated Tester",
-        "crm": doctor_data["crm"]  # Mantém o mesmo CRM
-    }
-    
-    print_info(f"\n4. Atualizando médico ({doctor_id})")
-    response = requests.put(f"{API_BASE_URL}/v1/doctor/{doctor_id}", json=updated_doctor_data)
-    
-    if response.status_code == 200:
-        print_success(f"Médico atualizado! Status: {response.status_code}")
-        print_json(response.json())
-    else:
-        print_error(f"Erro ao atualizar médico. Status: {response.status_code}")
-        print_warning(f"Resposta: {response.text}")
-    
-    # 5. Deletar médico
-    print_info(f"\n5. Deletando médico ({doctor_id})")
-    response = requests.delete(f"{API_BASE_URL}/v1/doctor/{doctor_id}")
-    
-    if response.status_code == 200:
-        print_success(f"Médico removido! Status: {response.status_code}")
-        print_json(response.json())
-    else:
-        print_error(f"Erro ao deletar médico. Status: {response.status_code}")
-        print_warning(f"Resposta: {response.text}")
-    
-    # Verificar se foi realmente deletado
-    print_info(f"\n6. Verificando se o médico foi realmente removido")
-    response = requests.get(f"{API_BASE_URL}/v1/doctor/{doctor_id}")
-    
-    if response.status_code == 404:
-        print_success(f"Médico realmente não existe mais! Status: {response.status_code}")
-    else:
-        print_error(f"Médico ainda existe! Status: {response.status_code}")
-        print_warning(f"Resposta: {response.json()}")
-
 def test_patient_endpoints():
     """Testa os endpoints relacionados a pacientes"""
     print_header("Testando endpoints de pacientes (Patients)")
@@ -235,8 +152,7 @@ def main():
     """Função principal que executa todos os testes"""
     if not check_api_health():
         sys.exit(1)
-    
-    test_doctor_endpoints()
+
     test_patient_endpoints()
     
     print_header("Testes concluídos")

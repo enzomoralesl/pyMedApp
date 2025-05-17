@@ -36,7 +36,6 @@ Base = declarative_base()
 # Função para criar tabelas
 def create_tables():
     """Cria todas as tabelas definidas nos modelos"""
-    from app.models.doctor import Doctor
     from app.models.patient import Patient
     Base.metadata.create_all(bind=engine)
 

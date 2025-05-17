@@ -32,58 +32,6 @@ def test_api():
         print("❌ API não iniciou após várias tentativas")
         return False
     
-    # Criar um médico
-    print("\n==== Testando CRUD de Médicos ====\n")
-    doctor_data = {
-        "name": "Dr. Docker Test",
-        "specialty": "Container Medicine",
-        "crm": f"DCK-{uuid.uuid4().hex[:5]}"
-    }
-    
-    print(f"Criando médico: {doctor_data}")
-    response = requests.post(f"{API_BASE_URL}/v1/doctor/", json=doctor_data)
-    
-    if response.status_code == 200:
-        print("✅ Médico criado com sucesso!")
-        doctor = response.json()
-        doctor_id = doctor.get("id")
-        print_json(doctor)
-        
-        # Atualizar o médico
-        updated_data = {
-            "name": "Dr. Docker Updated",
-            "specialty": "Container Surgery",
-            "crm": doctor_data["crm"]
-        }
-        
-        print(f"\nAtualizando médico para: {updated_data}")
-        response = requests.put(f"{API_BASE_URL}/v1/doctor/{doctor_id}", json=updated_data)
-        
-        if response.status_code == 200:
-            print("✅ Médico atualizado com sucesso!")
-            print_json(response.json())
-        else:
-            print(f"❌ Erro ao atualizar médico: {response.status_code}")
-            
-        # Listar todos os médicos
-        print("\nListando todos os médicos:")
-        response = requests.get(f"{API_BASE_URL}/v1/doctor/")
-        
-        if response.status_code == 200:
-            doctors = response.json()
-            print(f"✅ {len(doctors)} médicos encontrados")
-            
-        # Deletar o médico
-        print(f"\nDeletando o médico {doctor_id}")
-        response = requests.delete(f"{API_BASE_URL}/v1/doctor/{doctor_id}")
-        
-        if response.status_code == 200:
-            print("✅ Médico removido com sucesso!")
-        else:
-            print(f"❌ Erro ao remover médico: {response.status_code}")
-    else:
-        print(f"❌ Erro ao criar médico: {response.status_code}")
-    
     # Testar pacientes
     print("\n==== Testando CRUD de Pacientes ====\n")
     patient_data = {

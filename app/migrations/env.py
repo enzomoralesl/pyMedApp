@@ -13,7 +13,6 @@ from alembic import context
 
 # Import models to ensure they are registered with Base.metadata
 from app.database import Base
-from app.models.doctor import Doctor
 from app.models.patient import Patient
 
 # this is the Alembic Config object, which provides

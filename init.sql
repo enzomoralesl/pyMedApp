@@ -6,12 +6,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- CREATE SCHEMA public;
 
 -- Criação das tabelas se não existirem
-CREATE TABLE IF NOT EXISTS tb_doctor (
-    id UUID PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    specialty VARCHAR(255) NOT NULL,
-    crm VARCHAR(20) UNIQUE NOT NULL
-);
+
 
 CREATE TABLE IF NOT EXISTS tb_patient (
     id UUID PRIMARY KEY,
@@ -24,5 +19,4 @@ CREATE TABLE IF NOT EXISTS tb_patient (
 );
 
 -- Criação de índices para melhorar a performance
-CREATE INDEX IF NOT EXISTS idx_doctor_crm ON tb_doctor(crm);
 CREATE INDEX IF NOT EXISTS idx_patient_email ON tb_patient(email);

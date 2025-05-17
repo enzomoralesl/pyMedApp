@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.controllers.doctor_controller import router as doctor_router
 from app.controllers.patient_controller import router as patient_router
 from app.database import create_tables
 from app.exception_handler import add_exception_handlers
@@ -33,7 +32,6 @@ async def startup_event():
     print("✅ Banco de dados inicializado com sucesso!")
 
 # Inclusão dos routers
-app.include_router(doctor_router)
 app.include_router(patient_router)
 
 # Rota raiz
@@ -44,7 +42,6 @@ def read_root():
         "message": "Bem-vindo à PyMedApp API!",
         "docs": "/docs",
         "endpoints": {
-            "doctors": "/v1/doctor",
             "patients": "/v1/patient"
         }
     }
