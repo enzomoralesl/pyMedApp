@@ -64,21 +64,21 @@ def get_patients(db: Session):
         logger.error(f"Erro ao buscar pacientes: {str(e)}")
         raise HTTPException(status_code=500, detail="Erro ao buscar pacientes")
 
-def get_patient_by_id(db: Session, patient_id: uuid.UUID):
+def get_patient_by_id(db: Session, patient_email: str):
     """
-    Recupera um paciente pelo ID.
+    Recupera um paciente pelo email.
     
     Args:
         db: Sessão do banco de dados
-        patient_id: ID do paciente a ser recuperado
+        patient_id: Email do paciente a ser recuperado
     
     Returns:
         Patient: Paciente encontrado ou None se não encontrado
     """
     try:
-        return db.query(Patient).filter(Patient.id == patient_id).first()
+        return db.query(Patient).filter(Patient.email == patient_email).first()
     except Exception as e:
-        logger.error(f"Erro ao buscar paciente por ID: {str(e)}")
+        logger.error(f"Erro ao buscar paciente por Email: {str(e)}")
         raise HTTPException(status_code=500, detail="Erro ao buscar paciente")
 
 def update_patient(db: Session, patient_email: str, patient_request: PatientRequest):
@@ -107,7 +107,7 @@ def update_patient(db: Session, patient_email: str, patient_request: PatientRequ
             patient.birth_date = patient_request.birth_date
             db.commit()
             db.refresh(patient)
-            logger.info(f"Paciente atualizado com sucesso: {patient.id}")
+            logger.info(f"Paciente atualizado com sucesso: {patient.email}")
             return patient
         return None
     except IntegrityError as e:
@@ -120,7 +120,7 @@ def update_patient(db: Session, patient_email: str, patient_request: PatientRequ
         logger.error(f"Erro inesperado ao atualizar paciente: {str(e)}")
         raise HTTPException(status_code=500, detail="Erro interno do servidor")
 
-def delete_patient(db: Session, patient_id: uuid.UUID):
+def delete_patient(db: Session, patient_email: str):
     """
     Remove um paciente do banco de dados.
     
@@ -135,11 +135,11 @@ def delete_patient(db: Session, patient_id: uuid.UUID):
         HTTPException: Se ocorrer algum erro ao remover o paciente
     """
     try:
-        patient = db.query(Patient).filter(Patient.id == patient_id).first()
+        patient = db.query(Patient).filter(Patient.email == patient_email).first()
         if patient:
             db.delete(patient)
             db.commit()
-            logger.info(f"Paciente removido com sucesso: {patient_id}")
+            logger.info(f"Paciente removido com sucesso: {patient_email}")
             return patient
         return None
     except Exception as e:

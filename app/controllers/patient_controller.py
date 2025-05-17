@@ -75,13 +75,13 @@ async def read_all(db: Session = Depends(get_db)):
         logger.error(f"Erro inesperado ao buscar pacientes: {str(e)}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Erro interno do servidor")
 
-@router.get("/{patient_id}", response_model=PatientResponse)
-async def read(patient_id: UUID, db: Session = Depends(get_db)):
+@router.get("/{patient_email}", response_model=PatientResponse)
+async def read(patient_email: UUID, db: Session = Depends(get_db)):
     """
-    Recupera um paciente pelo ID
+    Recupera um paciente pelo Email
     
     Args:
-        patient_id: ID do paciente
+        patient_email: Email do paciente
         db: Sessão do banco de dados
         
     Returns:
@@ -91,9 +91,9 @@ async def read(patient_id: UUID, db: Session = Depends(get_db)):
         HTTPException: Se o paciente não for encontrado
     """
     try:
-        patient = get_patient_by_id(db, patient_id)
+        patient = get_patient_by_id(db, patient_email)
         if not patient:
-            logger.warning(f"Paciente não encontrado: {patient_id}")
+            logger.warning(f"Paciente não encontrado: {patient_email}")
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Paciente não encontrado")
         return PatientResponse(
             id=patient.id,
@@ -144,13 +144,13 @@ async def update(patient_email: str, patient_request: PatientRequest, db: Sessio
         logger.error(f"Erro inesperado ao atualizar paciente: {str(e)}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Erro interno do servidor")
 
-@router.delete("/{patient_id}", response_model=PatientResponse)
-async def delete(patient_id: UUID, db: Session = Depends(get_db)):
+@router.delete("/{patient_email}", response_model=PatientResponse)
+async def delete(patient_email: str, db: Session = Depends(get_db)):
     """
     Remove um paciente
     
     Args:
-        patient_id: ID do paciente a ser removido
+        patient_email: Email do paciente a ser removido
         db: Sessão do banco de dados
         
     Returns:
@@ -160,11 +160,11 @@ async def delete(patient_id: UUID, db: Session = Depends(get_db)):
         HTTPException: Se o paciente não for encontrado ou ocorrer algum erro
     """
     try:
-        patient = delete_patient(db, patient_id)
+        patient = delete_patient(db, patient_email)
         if not patient:
-            logger.warning(f"Paciente não encontrado para exclusão: {patient_id}")
+            logger.warning(f"Paciente não encontrado para exclusão: {patient_email}")
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Paciente não encontrado")
-        logger.info(f"Paciente removido: {patient_id}")
+        logger.info(f"Paciente removido: {patient_email}")
         return PatientResponse(
             id=patient.id,
             email=patient.email,
