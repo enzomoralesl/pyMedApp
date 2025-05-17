@@ -110,28 +110,25 @@ async def read(patient_id: UUID, db: Session = Depends(get_db)):
         logger.error(f"Erro inesperado ao buscar paciente: {str(e)}")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Erro interno do servidor")
 
-@router.put("/{patient_id}", response_model=PatientResponse)
-async def update(patient_id: UUID, patient_request: PatientRequest, db: Session = Depends(get_db)):
+@router.put("/{patient_email}", response_model=PatientResponse)
+async def update(patient_email: str, patient_request: PatientRequest, db: Session = Depends(get_db)):
     """
     Atualiza um paciente existente
-    
     Args:
-        patient_id: ID do paciente a ser atualizado
+        patient_email: Email do paciente a ser atualizado
         patient_request: Novos dados do paciente
         db: Sessão do banco de dados
-        
     Returns:
         PatientResponse: Paciente atualizado
-        
     Raises:
         HTTPException: Se o paciente não for encontrado ou ocorrer algum erro
     """
     try:
-        patient = update_patient(db, patient_id, patient_request)
+        patient = update_patient(db, patient_email, patient_request)
         if not patient:
-            logger.warning(f"Paciente não encontrado para atualização: {patient_id}")
+            logger.warning(f"Paciente não encontrado para atualização: {patient_email}")
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Paciente não encontrado")
-        logger.info(f"Paciente atualizado: {patient_id}")
+        logger.info(f"Paciente atualizado: {patient}")
         return PatientResponse(
             id=patient.id,
             email=patient.email,
