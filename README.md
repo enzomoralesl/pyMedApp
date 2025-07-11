@@ -33,14 +33,14 @@ docker-compose up -d
 Este comando iniciará:
 - Servidor PostgreSQL na porta 5432
 - pgAdmin na porta 16543 (interface web)
-- A API PyMedApp na porta 8000
+- A API PyMedApp na porta 8081
 
 ### 3. Acesse a API
 
 A aplicação estará disponível em:
-- API: http://localhost:8000
-- Documentação Swagger: http://localhost:8000/docs
-- Documentação ReDoc: http://localhost:8000/redoc
+- API: http://localhost:8081
+- Documentação Swagger: http://localhost:8081/docs
+- Documentação ReDoc: http://localhost:8081/redoc
 
 ### 4. Acesse o pgAdmin (opcional)
 
@@ -81,7 +81,7 @@ pymedapp/
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:8000/v1/patient/' \
+  'http://localhost:8081/v1/patient/' \
   -H 'Content-Type: application/json' \
   -d '{
     "email": "paciente@exemplo.com",

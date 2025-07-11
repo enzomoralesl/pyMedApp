@@ -8,7 +8,7 @@ import json
 import uuid
 import time
 
-API_BASE_URL = "http://app:8000"  # Use o nome do serviço no Docker Compose
+API_BASE_URL = "http://app:8081"  # Use o nome do serviço no Docker Compose
 
 def print_json(data):
     print(json.dumps(data, indent=2))

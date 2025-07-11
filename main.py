@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.controllers.patient_controller import router as patient_router
@@ -29,7 +30,12 @@ async def startup_event():
     """Evento executado na inicialização da aplicação"""
     # Cria todas as tabelas definidas nos modelos
     create_tables()
-    print("✅ Banco de dados inicializado com sucesso!")
+    print("Banco de dados inicializado com sucesso!")
+    running_env = os.getenv("RUNNING_ENV", "local")
+    if running_env == "docker":
+        print("Aplicação iniciada no Docker")
+    else:
+        print("Aplicação iniciada localmente")
 
 # Inclusão dos routers
 app.include_router(patient_router)
@@ -46,6 +52,5 @@ def read_root():
         }
     }
 
-# Inicialização condicional para execução direta (não via Docker)
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8081, reload=True)

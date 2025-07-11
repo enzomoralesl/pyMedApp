@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.schemas.patient import PatientRequest, PatientResponse
 from app.services.patient_service import create_patient, get_patients, get_patient_by_id, delete_patient, update_patient
-from uuid import UUID
 import logging
 
 # Configuração de logging
@@ -76,7 +75,7 @@ async def read_all(db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Erro interno do servidor")
 
 @router.get("/{patient_email}", response_model=PatientResponse)
-async def read(patient_email: UUID, db: Session = Depends(get_db)):
+async def read(patient_email: str, db: Session = Depends(get_db)):
     """
     Recupera um paciente pelo Email
     

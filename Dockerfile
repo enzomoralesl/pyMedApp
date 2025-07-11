@@ -25,7 +25,7 @@ COPY start.sh .
 RUN chmod +x /app/start.sh
 
 # Expõe a porta da aplicação
-EXPOSE 8000
+EXPOSE 8081
 
 # Comando para iniciar a aplicação
 CMD ["/app/start.sh"]

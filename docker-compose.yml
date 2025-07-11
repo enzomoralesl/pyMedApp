@@ -4,15 +4,16 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: pymedapp
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn main:app --host 0.0.0.0 --port 8081 --reload
     volumes:
       - .:/app
       - /app/__pycache__
     ports:
-      - "8000:8000"
+      - "8081:8081"
     depends_on:
       - db
     environment:
+      - RUNNING_ENV=docker
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=12345
       - POSTGRES_DB=exampledb
