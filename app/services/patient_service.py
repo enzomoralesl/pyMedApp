@@ -40,7 +40,7 @@ def create_patient(db: Session, patient_request: PatientRequest):
         return patient
     except IntegrityError as e:
         db.rollback()
-        # Não lançar HTTPException manualmente para unicidade (email/cpf), deixar handler global tratar
+        # Não lançar HTTPException manualmente para unicidade (email), deixar handler global tratar
         logger.error(f"Erro ao criar paciente: {str(e)}")
         raise
     except Exception as e:
@@ -112,7 +112,7 @@ def update_patient(db: Session, patient_email: str, patient_request: PatientRequ
         return None
     except IntegrityError as e:
         db.rollback()
-        # Não lançar HTTPException manualmente para unicidade (email/cpf), deixar handler global tratar
+        # Não lançar HTTPException manualmente para unicidade (email), deixar handler global tratar
         logger.error(f"Erro ao atualizar paciente: {str(e)}")
         raise
     except Exception as e:

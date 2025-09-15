@@ -12,8 +12,7 @@ logger = logging.getLogger("uvicorn.error")
 
 # Map SQL constraint names to custom messages (adapt as needed)
 CONSTRAINT_MESSAGES = {
-    "tb_patient_email_key": ("Email já cadastrado", 409, "CONFLICT"),
-    "tb_patient_cpf_key": ("CPF já cadastrado", 409, "CONFLICT"),
+    "tb_patient_email_key": ("Email ja cadastrado", 409, "CONFLICT")
 }
 
 def get_error_response(status_code, status_name, message, error_details=None):
