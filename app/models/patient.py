@@ -7,7 +7,7 @@ class Patient(Base):
     """Modelo para a tabela de pacientes, equivalente ao JPAPatientEntity do Java"""
     __tablename__ = "tb_patient"
     __table_args__ = (
-        UniqueConstraint('email', name='uq_patient_email')
+        UniqueConstraint('email', name='uq_patient_email'),
     )
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
