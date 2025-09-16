@@ -6,23 +6,9 @@ from app.schemas.patient import PatientRequest
 import uuid
 import logging
 
-# Configuração de logging
 logger = logging.getLogger(__name__)
 
 def create_patient(db: Session, patient_request: PatientRequest):
-    """
-    Cria um novo paciente no banco de dados.
-    
-    Args:
-        db: Sessão do banco de dados
-        patient_request: Dados do paciente a ser criado
-    
-    Returns:
-        Patient: Paciente criado
-        
-    Raises:
-        HTTPException: Se ocorrer algum erro ao criar o paciente
-    """
     try:
         patient = Patient(
             id=uuid.uuid4(),
@@ -49,15 +35,6 @@ def create_patient(db: Session, patient_request: PatientRequest):
         raise HTTPException(status_code=500, detail="Erro interno do servidor")
 
 def get_patients(db: Session):
-    """
-    Recupera todos os pacientes do banco de dados.
-    
-    Args:
-        db: Sessão do banco de dados
-    
-    Returns:
-        list[Patient]: Lista de pacientes encontrados
-    """
     try:
         return db.query(Patient).all()
     except Exception as e:
@@ -65,16 +42,6 @@ def get_patients(db: Session):
         raise HTTPException(status_code=500, detail="Erro ao buscar pacientes")
 
 def get_patient_by_id(db: Session, patient_email: str):
-    """
-    Recupera um paciente pelo email.
-    
-    Args:
-        db: Sessão do banco de dados
-        patient_id: Email do paciente a ser recuperado
-    
-    Returns:
-        Patient: Paciente encontrado ou None se não encontrado
-    """
     try:
         return db.query(Patient).filter(Patient.email == patient_email).first()
     except Exception as e:
@@ -82,20 +49,6 @@ def get_patient_by_id(db: Session, patient_email: str):
         raise HTTPException(status_code=500, detail="Erro ao buscar paciente")
 
 def update_patient(db: Session, patient_email: str, patient_request: PatientRequest):
-    """
-    Atualiza um paciente existente.
-    
-    Args:
-        db: Sessão do banco de dados
-        patient_email: Email do paciente a ser atualizado
-        patient_request: Novos dados do paciente
-    
-    Returns:
-        Patient: Paciente atualizado ou None se não encontrado
-        
-    Raises:
-        HTTPException: Se ocorrer algum erro ao atualizar o paciente
-    """
     try:
         patient = db.query(Patient).filter(Patient.email == patient_email).first()
         if patient:
@@ -121,19 +74,6 @@ def update_patient(db: Session, patient_email: str, patient_request: PatientRequ
         raise HTTPException(status_code=500, detail="Erro interno do servidor")
 
 def delete_patient(db: Session, patient_email: str):
-    """
-    Remove um paciente do banco de dados.
-    
-    Args:
-        db: Sessão do banco de dados
-        patient_id: ID do paciente a ser removido
-    
-    Returns:
-        Patient: Paciente removido ou None se não encontrado
-        
-    Raises:
-        HTTPException: Se ocorrer algum erro ao remover o paciente
-    """
     try:
         patient = db.query(Patient).filter(Patient.email == patient_email).first()
         if patient:
