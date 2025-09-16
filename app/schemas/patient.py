@@ -9,7 +9,7 @@ class PatientRequest(BaseModel):
     cpf: str = Field(..., description="CPF do paciente")
     password: str = Field(..., description="Senha do paciente")
     phone: Optional[str] = Field(None, description="Telefone do paciente")
-    birth_date: Optional[str] = Field(None, alias="birthDate", description="Data de nascimento")
+    birthDate: Optional[str] = Field(None, alias="birthDate", description="Data de nascimento")
 
 class PatientResponse(BaseModel):
     """Esquema de resposta para pacientes, equivalente ao PatientResponse do Java"""
@@ -19,4 +19,7 @@ class PatientResponse(BaseModel):
     cpf: str
     password: str
     phone: Optional[str] = None
-    birth_date: Optional[str] = Field(None, alias="birthDate")
+    birthDate: Optional[str] = Field(None)
+
+    class Config:
+        orm_mode = True

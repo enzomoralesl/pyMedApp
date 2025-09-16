@@ -17,7 +17,7 @@ def create_patient(db: Session, patient_request: PatientRequest):
             cpf=patient_request.cpf,
             password=patient_request.password,
             phone=patient_request.phone,
-            birth_date=patient_request.birth_date
+            birth_date=patient_request.birthDate
         )
         db.add(patient)
         db.commit()
@@ -57,7 +57,7 @@ def update_patient(db: Session, patient_email: str, patient_request: PatientRequ
             patient.cpf = patient_request.cpf
             patient.password = patient_request.password
             patient.phone = patient_request.phone
-            patient.birth_date = patient_request.birth_date
+            patient.birth_date = patient_request.birthDate
             db.commit()
             db.refresh(patient)
             logger.info(f"Paciente atualizado com sucesso: {patient.email}")

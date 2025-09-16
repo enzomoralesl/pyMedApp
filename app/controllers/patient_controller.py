@@ -12,17 +12,6 @@ router = APIRouter(prefix="/v1/patient", tags=["Patients"])
 
 @router.post("", response_model=PatientResponse, status_code=status.HTTP_201_CREATED)
 async def create(patient_request: PatientRequest, response: Response, db: Session = Depends(get_db)):
-    """
-    Cria um novo paciente
-    
-    Args:
-        patient_request: Dados do paciente a ser criado
-        response: Objeto de resposta
-        db: Sessão do banco de dados
-        
-    Returns:
-        PatientResponse: Paciente criado
-    """
     try:
         patient = create_patient(db, patient_request)
         response.status_code = status.HTTP_201_CREATED
@@ -34,7 +23,7 @@ async def create(patient_request: PatientRequest, response: Response, db: Sessio
             cpf=patient.cpf,
             password=patient.password,
             phone=patient.phone,
-            birth_date=patient.birth_date
+            birthDate=patient.birth_date
         )
     except HTTPException as e:
         logger.warning(f"Erro ao criar paciente: {e.detail}")
@@ -45,15 +34,6 @@ async def create(patient_request: PatientRequest, response: Response, db: Sessio
 
 @router.get("", response_model=list[PatientResponse])
 async def read_all(db: Session = Depends(get_db)):
-    """
-    Recupera todos os pacientes
-    
-    Args:
-        db: Sessão do banco de dados
-        
-    Returns:
-        list[PatientResponse]: Lista de pacientes
-    """
     try:
         patients = get_patients(db)
         return [
@@ -64,7 +44,7 @@ async def read_all(db: Session = Depends(get_db)):
                 cpf=patient.cpf,
                 password=patient.password,
                 phone=patient.phone,
-                birth_date=patient.birth_date
+                birthDate=patient.birth_date
             ) for patient in patients
         ]
     except HTTPException as e:
@@ -76,19 +56,6 @@ async def read_all(db: Session = Depends(get_db)):
 
 @router.get("/{patient_email}", response_model=PatientResponse)
 async def read(patient_email: str, db: Session = Depends(get_db)):
-    """
-    Recupera um paciente pelo Email
-    
-    Args:
-        patient_email: Email do paciente
-        db: Sessão do banco de dados
-        
-    Returns:
-        PatientResponse: Paciente encontrado
-        
-    Raises:
-        HTTPException: Se o paciente não for encontrado
-    """
     try:
         patient = get_patient_by_id(db, patient_email)
         if not patient:
@@ -101,7 +68,7 @@ async def read(patient_email: str, db: Session = Depends(get_db)):
             cpf=patient.cpf,
             password=patient.password,
             phone=patient.phone,
-            birth_date=patient.birth_date
+            birthDate=patient.birth_date
         )
     except HTTPException as e:
         raise e
@@ -111,17 +78,6 @@ async def read(patient_email: str, db: Session = Depends(get_db)):
 
 @router.put("/{patient_email}", response_model=PatientResponse)
 async def update(patient_email: str, patient_request: PatientRequest, db: Session = Depends(get_db)):
-    """
-    Atualiza um paciente existente
-    Args:
-        patient_email: Email do paciente a ser atualizado
-        patient_request: Novos dados do paciente
-        db: Sessão do banco de dados
-    Returns:
-        PatientResponse: Paciente atualizado
-    Raises:
-        HTTPException: Se o paciente não for encontrado ou ocorrer algum erro
-    """
     try:
         patient = update_patient(db, patient_email, patient_request)
         if not patient:
@@ -135,7 +91,7 @@ async def update(patient_email: str, patient_request: PatientRequest, db: Sessio
             cpf=patient.cpf,
             password=patient.password,
             phone=patient.phone,
-            birth_date=patient.birth_date
+            birthDate=patient.birth_date
         )
     except HTTPException as e:
         raise e
@@ -145,19 +101,6 @@ async def update(patient_email: str, patient_request: PatientRequest, db: Sessio
 
 @router.delete("/{patient_email}", response_model=PatientResponse)
 async def delete(patient_email: str, db: Session = Depends(get_db)):
-    """
-    Remove um paciente
-    
-    Args:
-        patient_email: Email do paciente a ser removido
-        db: Sessão do banco de dados
-        
-    Returns:
-        PatientResponse: Paciente removido
-        
-    Raises:
-        HTTPException: Se o paciente não for encontrado ou ocorrer algum erro
-    """
     try:
         patient = delete_patient(db, patient_email)
         if not patient:
@@ -171,7 +114,7 @@ async def delete(patient_email: str, db: Session = Depends(get_db)):
             cpf=patient.cpf,
             password=patient.password,
             phone=patient.phone,
-            birth_date=patient.birth_date
+            birthDate=patient.birth_date
         )
     except HTTPException as e:
         raise e
