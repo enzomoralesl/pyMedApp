@@ -29,7 +29,7 @@ app.add_middleware(
 async def startup_event():
     """Evento executado na inicialização da aplicação"""
     # Cria todas as tabelas definidas nos modelos
-    create_tables()
+    await create_tables()
     print("Banco de dados inicializado com sucesso!")
     running_env = os.getenv("RUNNING_ENV", "local")
     if running_env == "docker":

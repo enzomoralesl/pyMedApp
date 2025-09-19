@@ -23,9 +23,9 @@ fi
 
 # Initialize database tables using SQLAlchemy models
 echo "Setting up SQLAlchemy models..."
-python -c "from app.database import create_tables; create_tables()"
+python -c "import asyncio; from app.database import create_tables; asyncio.run(create_tables())"
 echo "Database setup completed."
 
 # Start the application
-echo "Starting FastAPI application..."
-exec uvicorn main:app --host 0.0.0.0 --port 8081 --reload
+echo "Starting FastAPI application with Gunicorn..."
+exec gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8081
