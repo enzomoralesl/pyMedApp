@@ -20,12 +20,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia o restante do código
 COPY . .
 
-# Cria script de espera pelo banco de dados
 COPY start.sh .
 RUN chmod +x /app/start.sh
 
-# Expõe a porta da aplicação
 EXPOSE 8081
-
-# Comando para iniciar a aplicação
 CMD ["/app/start.sh"]
