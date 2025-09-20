@@ -20,6 +20,7 @@ add_exception_handlers(app)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -27,6 +28,7 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup_event():
+    # Cria todas as tabelas definidas nos modelos
 
     await create_tables()
     print("Banco de dados inicializado com sucesso!")
@@ -36,10 +38,8 @@ async def startup_event():
     else:
         print("Aplicação iniciada localmente")
 
-# Inclusão dos routers
 app.include_router(patient_router)
 
-# Rota raiz
 @app.get("/")
 def read_root():
     return {
