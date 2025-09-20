@@ -6,7 +6,6 @@ from app.database import create_tables
 from app.exception_handler import add_exception_handlers
 import uvicorn
 
-# Criação da aplicação FastAPI
 app = FastAPI(
     title="PyMedApp API",
     description="API para gerenciamento de pacientes",
@@ -15,10 +14,9 @@ app = FastAPI(
 
 add_exception_handlers(app)
 
-# Configuração de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Em produção, restrinja às origens permitidas
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -27,7 +25,6 @@ app.add_middleware(
 # Eventos de inicialização e encerramento
 @app.on_event("startup")
 async def startup_event():
-    """Evento executado na inicialização da aplicação"""
     # Cria todas as tabelas definidas nos modelos
     await create_tables()
     print("Banco de dados inicializado com sucesso!")
@@ -37,13 +34,10 @@ async def startup_event():
     else:
         print("Aplicação iniciada localmente")
 
-# Inclusão dos routers
 app.include_router(patient_router)
 
-# Rota raiz
 @app.get("/")
 def read_root():
-    """Rota raiz da API"""
     return {
         "message": "Bem-vindo à PyMedApp API!",
         "docs": "/docs",
