@@ -20,7 +20,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia o restante do código
 COPY . .
 
-COPY start.sh .
+COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
 EXPOSE 8081
