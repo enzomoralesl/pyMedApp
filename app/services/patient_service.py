@@ -1,5 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy.orm import selectinload
 from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
 from app.models.patient import Patient
@@ -36,7 +37,7 @@ async def create_patient(db: AsyncSession, patient_request: PatientRequest):
 
 async def get_patients(db: AsyncSession):
     try:
-        result = await db.execute(select(Patient))
+        result = await db.execute(select(Patient).options(selectinload("*")))
         return result.scalars().all()
     except Exception as e:
         logger.error(f"Erro ao buscar pacientes: {str(e)}")

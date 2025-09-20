@@ -36,17 +36,7 @@ async def create(patient_request: PatientRequest, response: Response, db: AsyncS
 async def read_all(db: AsyncSession = Depends(get_db)):
     try:
         patients = await get_patients(db)
-        return [
-            PatientResponse(
-                id=patient.id,
-                email=patient.email,
-                name=patient.name,
-                cpf=patient.cpf,
-                password=patient.password,
-                phone=patient.phone,
-                birthDate=patient.birth_date
-            ) for patient in patients
-        ]
+        return patients
     except HTTPException as e:
         logger.warning(f"Erro ao buscar pacientes: {e.detail}")
         raise e
