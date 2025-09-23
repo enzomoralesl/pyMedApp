@@ -4,9 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: pymedapp
-    volumes:
-      - .:/app
-      - /app/__pycache__
+#    volumes:
+#      - .:/app
+#      - /app/__pycache__
     ports:
       - "8081:8081"
     depends_on:
@@ -22,10 +22,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
+          cpus: '2.0'
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: '1'
           memory: 256M
 
   db:
@@ -37,17 +37,23 @@ services:
       - POSTGRES_DB=exampledb
     ports:
       - "5432:5432"
+    command: >
+      postgres -c max_connections=200
+      -c shared_buffers=512MB
+      -c effective_cache_size=1536MB
+      -c maintenance_work_mem=128MB
+      -c work_mem=16MB
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     deploy:
       resources:
         limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
           cpus: '0.5'
           memory: 256M
-        reservations:
-          cpus: '0.25'
-          memory: 128M
 #    healthcheck:
 #      test: ["CMD-SHELL", "pg_isready -U user -d exampledb"]
 #      interval: 5s

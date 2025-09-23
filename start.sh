@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
 # Wait for PostgreSQL to be ready
@@ -26,6 +26,18 @@ echo "Setting up SQLAlchemy models..."
 python -c "import asyncio; from app.database import create_tables; asyncio.run(create_tables())"
 echo "Database setup completed."
 
-# Start the application
-echo "Starting FastAPI application with Gunicorn..."
-exec gunicorn main:app --workers 5 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8081
+# Start the application with optimized settings
+echo "Starting FastAPI application with Gunicorn (uvloop + httptools)..."
+exec gunicorn main:app \
+  --workers 5 \
+  --worker-class uvicorn.workers.UvicornWorker \
+  --bind 0.0.0.0:8081 \
+  --worker-connections 1000 \
+  --max-requests 1000 \
+  --max-requests-jitter 50 \
+  --preload \
+  --timeout 30 \
+  --keep-alive 2 \
+  --access-logfile - \
+  --error-logfile - \
+  --log-level info
